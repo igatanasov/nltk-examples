@@ -155,18 +155,18 @@ def sentence_tokenization():
 
 
 def main():
-    web_file_plain()
+    #  web_file_plain()
     #  web_file_html()
     #  web_file_rss()
     #  unicode_read()
-    #  basic_regexps()
+    # basic_regexps()
     #  compress_vowels()
     #  consonant_vowel_sequences_rotokas()
     #  discover_hypernyms()
     #  find_in_stemmed_index("offic") # porter
     #  find_in_stemmed_index("officer") # wordnet
-    #  regex_word_tokenize()
-    #  sentence_tokenization()
+    # regex_word_tokenize()
+    # sentence_tokenization()
     pass
 
 
