@@ -4,6 +4,17 @@ from __future__ import division
 import nltk
 import re
 
+def tabulate(cfdist, words, categories):
+    print '%-16s' % 'Category',
+    for word in words:
+      print '%6s' % word,
+    print
+    for category in categories:
+      print '%-16s' % category,
+    for word in words:
+      print '%6d' % cfdist[category][word],
+    print
+
 def ch03_10():
   sent = re.split(" ", "The dog gave John the newspaper")
   print([(w, len(w)) for w in sent])
