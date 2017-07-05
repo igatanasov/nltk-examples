@@ -26,7 +26,7 @@ def ch04_16_gematria_for_word():
     words = state_union.words(fileid)
     satanic_words = filter(lambda x : gematrix_score(x) == 666, words)
     if satanic_words > 0:
-      print fileid, len(satanic_words)
+      print(fileid, len(satanic_words))
 
 def ch04_17_shorten(words, n):
   fd = nltk.FreqDist(words)
@@ -80,12 +80,12 @@ def lookup_trie_r(trie, key, buf):
 
 def ch04_23_lookup_trie():
   trie = insert_trie(["van", "vanity", "vanguard"])
-  print lookup_trie(trie, "van")
-  print lookup_trie(trie, "vanguard")
-  print lookup_trie(trie, "fidelity")
+  print(lookup_trie(trie, "van"))
+  print(lookup_trie(trie, "vanguard"))
+  print(lookup_trie(trie, "fidelity"))
 
 #def ch04_24_keyword_linkage():
-#  print "TODO"
+#  print("TODO")
 
 def catalan1(n):
   if n == 0 or n == 1:
@@ -112,36 +112,36 @@ def ch04_26_catalan_numbers():
     s2 = time.clock()
     cat2 = catalan2(cache, i)
     s2 = time.clock() - s2
-    print i, cat1, cat2, s1, s2
+    print(i, cat1, cat2, s1, s2)
 
 #def ch04_27_author_identification():
-#  print "TODO"
+#  print("TODO")
 #
 #def ch04_28_gender_lexical_choice():
-#  print "TODO"
+#  print("TODO")
 #
 #def ch04_30_uniqueness_point_cutoff():
-#  print "TODO"
+#  print("TODO")
 #
 #def ch04_32_summarizer():
-#  print "TODO"
+#  print("TODO")
 #
 #def ch04_semantic_orientation_adjectives():
-#  print "TODO"
+#  print("TODO")
 #
 #def ch04_statistically_improbable_phrases():
-#  print "TODO"
+#  print("TODO")
 
 def main():
-#  print ch04_10_sort_words_by_length(
+#  print(ch04_10_sort_words_by_length()
 #    ["She", "sells", "sea", "shells", "by", "the", "seashore"])
 
-#  print ch04_16_gematria_for_word()
+#  print(ch04_16_gematria_for_word())
 
-#  print ch04_17_shorten(nltk.corpus.state_union.words("2000-Clinton.txt"), 20)
+#  print(ch04_17_shorten(nltk.corpus.state_union.words("2000-Clinton.txt"), 20))
 
 #  from nltk.corpus import wordnet as wn
-#  print ch04_19_sort_by_path_sim(
+#  print(ch04_19_sort_by_path_sim()
 #    [wn.synset("minke_whale.n.01"), wn.synset("orca.n.01"),
 #    wn.synset("novel.n.01"), wn.synset("tortoise.n.01")],
 #    wn.synset("right_whale.n.01"))
