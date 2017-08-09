@@ -4,11 +4,42 @@
 from __future__ import division
 import nltk
 import re
+import pylab
 
 def bylen(x, y):
   return len(x) - len(y)
 
-def ch04_10_sort_words_by_length(words):
+def ch04_10_sort_words_by_length():
+  genres = ['news', 'religion', 'hobbies', 'government', 'adventure']
+  modals = ['can', 'could', 'may', 'might', 'must', 'will']
+  cfdist = nltk.ConditionalFreqDist(
+              (genre, word)
+              for genre in genres
+              for word in nltk.corpus.brown.words(categories=genre)
+              if word in modals)
+
+  counts = {}
+  for genre in genres:
+      counts[genre] = [cfdist[genre][word] for word in modals]
+  bar_chart(genres, modals, counts)
+
+def bar_chart(categories, words, counts):
+  colors = 'rgbcmyk' # red, green, blue, cyan, magenta, yellow, black
+  "Plot a bar chart showing counts for each word by category"
+  ind = pylab.arange(len(words))
+  width = 1 / (len(categories) + 1)
+  bar_groups = []
+  for c in range(len(categories)):
+      bars = pylab.bar(ind+c*width, counts[categories[c]], width,
+          color=colors[c % len(colors)])
+      bar_groups.append(bars)
+  pylab.xticks(ind+width, words)
+  pylab.legend([b[0] for b in bar_groups], categories, loc='upper left')
+  pylab.ylabel('Frequency')
+  pylab.title('Frequency of Six Modal Verbs by Genre')
+  pylab.show()
+
+def ch04_10_frequency_of_modals_length(words):
   return sorted(words, cmp=bylen)
 
 def gematrix_score(word):
@@ -148,7 +179,8 @@ def main():
 
 #  ch04_23_lookup_trie()
 
-  ch04_26_catalan_numbers()
+#  ch04_26_catalan_numbers()
+  ch04_10_sort_words_by_length()
   
 
 if __name__ == "__main__":
