@@ -8,7 +8,7 @@ import random
 import math
 
 
-def _gender_features(word):
+def gender_features(word):
     features = {}
     # started with 1 feature
     features["last_letter"] = word[-1].lower()
@@ -32,11 +32,11 @@ def naive_bayes_gender_classifier():
     #  featuresets = [(_gender_features(n), g) for (n,g) in names]
     #  train_set, test_set = featuresets[500:], featuresets[:500]
     # advisable to stream the sets in for large data set.
-    train_set = apply_features(_gender_features, names[500:])
-    test_set = apply_features(_gender_features, names[:500])
+    train_set = apply_features(gender_features, names[500:])
+    test_set = apply_features(gender_features, names[:500])
     classifier = nltk.NaiveBayesClassifier.train(train_set)
-    print("Neo is ", classifier.classify(_gender_features("Neo")))
-    print("Trinity is", classifier.classify(_gender_features("Trinity")))
+    print("Neo is ", classifier.classify(gender_features("Neo")))
+    print("Trinity is", classifier.classify(gender_features("Trinity")))
     # calculate the accuracy of the classifier
     print(nltk.classify.accuracy(classifier, test_set))
     classifier.show_most_informative_features(5)
@@ -49,14 +49,14 @@ def error_analysis():
     random.shuffle(names)
     test_names, devtest_names, train_names = \
       names[:500], names[500:1500], names[1500:]
-    train_set = [(_gender_features(n), g) for (n, g) in train_names]
-    devtest_set = [(_gender_features(n), g) for (n, g) in devtest_names]
-    test_set = [(_gender_features(n), g) for (n, g) in test_names]
+    train_set = [(gender_features(n), g) for (n, g) in train_names]
+    devtest_set = [(gender_features(n), g) for (n, g) in devtest_names]
+    test_set = [(gender_features(n), g) for (n, g) in test_names]
     classifier = nltk.NaiveBayesClassifier.train(train_set)
     print(nltk.classify.accuracy(classifier, devtest_set))
     errors = []
     for (name, tag) in devtest_names:
-        guess = classifier.classify(_gender_features(name))
+        guess = classifier.classify(gender_features(name))
         if guess != tag:
             errors.append((tag, guess, name))
     for (tag, guess, name) in sorted(errors):
@@ -269,9 +269,9 @@ def calc_entropy():
 
 
 def main():
-    #  naive_bayes_gender_classifier()
+    naive_bayes_gender_classifier()
     #  error_analysis()
-    document_classification_movie_reviews()
+    # document_classification_movie_reviews()
     #  pos_tagging_classification()
     #  pos_tagging_classification_with_sentence_context()
     #  sequence_classification_using_prev_pos()
@@ -279,7 +279,7 @@ def main():
     #  identify_dialog_act_types()
     #  recognize_text_entailment()
     #  calc_entropy()
-    
+
 
 if __name__ == "__main__":
     main()
