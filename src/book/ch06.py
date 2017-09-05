@@ -35,10 +35,10 @@ def naive_bayes_gender_classifier():
     train_set = apply_features(_gender_features, names[500:])
     test_set = apply_features(_gender_features, names[:500])
     classifier = nltk.NaiveBayesClassifier.train(train_set)
-    print "Neo is ", classifier.classify(_gender_features("Neo"))
-    print "Trinity is", classifier.classify(_gender_features("Trinity"))
+    print("Neo is ", classifier.classify(_gender_features("Neo")))
+    print("Trinity is", classifier.classify(_gender_features("Trinity")))
     # calculate the accuracy of the classifier
-    print nltk.classify.accuracy(classifier, test_set)
+    print(nltk.classify.accuracy(classifier, test_set))
     classifier.show_most_informative_features(5)
 
 
@@ -53,14 +53,14 @@ def error_analysis():
     devtest_set = [(_gender_features(n), g) for (n, g) in devtest_names]
     test_set = [(_gender_features(n), g) for (n, g) in test_names]
     classifier = nltk.NaiveBayesClassifier.train(train_set)
-    print nltk.classify.accuracy(classifier, devtest_set)
+    print(nltk.classify.accuracy(classifier, devtest_set))
     errors = []
     for (name, tag) in devtest_names:
         guess = classifier.classify(_gender_features(name))
         if guess != tag:
             errors.append((tag, guess, name))
     for (tag, guess, name) in sorted(errors):
-        print "correct=%s, guess=%s, name=%s" % (tag, guess, name)
+        print("correct=%s, guess=%s, name=%s" % (tag, guess, name))
 
 
 def _document_features(document, word_features):
@@ -79,12 +79,12 @@ def document_classification_movie_reviews():
     random.shuffle(documents)
     # use the most frequest 2000 words as features
     all_words = nltk.FreqDist(w.lower() for w in movie_reviews.words())
-    word_features = all_words.keys()[:2000]
+    word_features = list(all_words.keys())[:2000]
     featuresets = [(_document_features(d, word_features), category)
                    for (d, category) in documents]
     train_set, test_set = featuresets[100:], featuresets[:100]
     classifier = nltk.NaiveBayesClassifier.train(train_set)
-    print nltk.classify.accuracy(classifier, test_set)
+    print(nltk.classify.accuracy(classifier, test_set))
     classifier.show_most_informative_features(30)
 
 
@@ -111,8 +111,8 @@ def pos_tagging_classification():
     size = int(len(featuresets) * 0.1)
     train_set, test_set = featuresets[size:], featuresets[:size]
     classifier = nltk.DecisionTreeClassifier.train(train_set)
-    print nltk.classify.accuracy(classifier, test_set)
-    print classifier.pseudocode(depth=4)
+    print(nltk.classify.accuracy(classifier, test_set))
+    print(classifier.pseudocode(depth=4))
 
 
 def _pos_features2(sentence, i):
@@ -139,7 +139,7 @@ def pos_tagging_classification_with_sentence_context():
     size = int(len(featuresets) * 0.1)
     train_set, test_set = featuresets[size:], featuresets[:size]
     classifier = nltk.NaiveBayesClassifier.train(train_set)
-    print nltk.classify.accuracy(classifier, test_set)
+    print(nltk.classify.accuracy(classifier, test_set))
 
 
 def _pos_features3(sentence, i, history):
@@ -184,7 +184,7 @@ def sequence_classification_using_prev_pos():
     size = int(len(tagged_sents) * 0.1)
     train_sents, test_sents = tagged_sents[size:], tagged_sents[:size]
     tagger = ConsecutivePosTagger(train_sents)
-    print tagger.evaluate(test_sents)
+    print(tagger.evaluate(test_sents))
 
 
 def _punct_features(tokens, i):
@@ -212,7 +212,7 @@ def sentence_segmentation_as_classification_for_punctuation():
     size = int(len(featuresets) * 0.1)
     train_set, test_set = featuresets[size:], featuresets[:size]
     classifier = nltk.NaiveBayesClassifier.train(train_set)
-    print nltk.classify.accuracy(classifier, test_set)
+    print(nltk.classify.accuracy(classifier, test_set))
 
 
 def _dialog_act_features(post):
@@ -229,7 +229,7 @@ def identify_dialog_act_types():
     size = int(len(featuresets) * 0.1)
     train_set, test_set = featuresets[size:], featuresets[:size]
     classifier = nltk.NaiveBayesClassifier.train(train_set)
-    print nltk.classify.accuracy(classifier, test_set)
+    print(nltk.classify.accuracy(classifier, test_set))
 
 
 def _rte_features(rtepair):
@@ -248,12 +248,12 @@ def recognize_text_entailment():
     rtepair = nltk.corpus.rte.pairs(["rte3_dev.xml"])[33]
     extractor = nltk.RTEFeatureExtractor(rtepair)
     # all important words in hypothesis is contained in text => entailment
-    print "text-words=", extractor.text_words
-    print "hyp-words=", extractor.hyp_words
-    print "overlap(word)=", extractor.overlap("word")
-    print "overlap(ne)=", extractor.overlap("ne")
-    print "hyp_extra(word)=", extractor.hyp_extra("word")
-    print "hyp_extra(ne)=", extractor.hyp_extra("ne")
+    print("text-words=", extractor.text_words)
+    print("hyp-words=", extractor.hyp_words)
+    print("overlap(word)=", extractor.overlap("word"))
+    print("overlap(ne)=", extractor.overlap("ne"))
+    print("hyp_extra(word)=", extractor.hyp_extra("word"))
+    print("hyp_extra(ne)=", extractor.hyp_extra("ne"))
 
 
 def entropy(labels):
@@ -263,9 +263,9 @@ def entropy(labels):
 
 
 def calc_entropy():
-    print entropy(["male", "male", "male", "female"])
-    print entropy(["male", "male", "male", "male"])
-    print entropy(["female", "female", "female", "female"])
+    print(entropy(["male", "male", "male", "female"]))
+    print(entropy(["male", "male", "male", "male"]))
+    print(entropy(["female", "female", "female", "female"]))
 
 
 def main():
@@ -279,8 +279,7 @@ def main():
     #  identify_dialog_act_types()
     #  recognize_text_entailment()
     #  calc_entropy()
-    print "end"
-
+    
 
 if __name__ == "__main__":
     main()

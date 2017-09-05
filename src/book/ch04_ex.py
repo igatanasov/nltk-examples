@@ -28,10 +28,12 @@ def hyponym_graph(start):
 
 
 def graph_draw(graph):
-    pos = graphviz_layout(
-        graph)
+    pos = graphviz_layout(graph)
 
-    nx.draw(graph, pos, node_size=[16 * graph.degree(n) for n in graph],
+    nx.draw(
+        graph,
+        pos,
+        node_size=[16 * graph.degree(n) for n in graph],
         node_color=[graph.depth[n] for n in graph],
         with_labels=False)
 
