@@ -101,10 +101,11 @@ def pos_tagging_classification():
     suffix_fdist = nltk.FreqDist()
     for word in brown.words():
         word = word.lower()
-        suffix_fdist.inc(word[-1:])
-        suffix_fdist.inc(word[-2:])
-        suffix_fdist.inc(word[-3:])
-    common_suffixes = suffix_fdist.keys()[:100]
+        nltk.FreqDist(word[-1:])
+        nltk.FreqDist(word[-2:])
+        nltk.FreqDist(word[-3:])
+
+    common_suffixes = list(suffix_fdist.keys())[:100]
     tagged_words = brown.tagged_words(categories="news")
     featuresets = [(_pos_features(w, common_suffixes), pos)
                    for (w, pos) in tagged_words]
@@ -232,18 +233,6 @@ def identify_dialog_act_types():
     print(nltk.classify.accuracy(classifier, test_set))
 
 
-def _rte_features(rtepair):
-    # builds a bag of words for both text and hypothesis
-    # after throwing away some stopwords
-    extractor = nltk.RTEFeatureExtractor(rtepair)
-    return {
-        "word_overlap": len(extractor.overlap("word")),
-        "word_hyp_extra": len(extractor.hyp_extra("word")),
-        "ne_overlap": len(extractor.overlap("ne")),
-        "ne_hyp_overlap": len(extractor.hyp_extra("ne"))
-    }
-
-
 def recognize_text_entailment():
     rtepair = nltk.corpus.rte.pairs(["rte3_dev.xml"])[33]
     extractor = nltk.RTEFeatureExtractor(rtepair)
@@ -269,16 +258,16 @@ def calc_entropy():
 
 
 def main():
-    naive_bayes_gender_classifier()
+    # naive_bayes_gender_classifier()
     #  error_analysis()
     # document_classification_movie_reviews()
-    #  pos_tagging_classification()
-    #  pos_tagging_classification_with_sentence_context()
+    # pos_tagging_classification()
+    # pos_tagging_classification_with_sentence_context()
     #  sequence_classification_using_prev_pos()
     #  sentence_segmentation_as_classification_for_punctuation()
-    #  identify_dialog_act_types()
-    #  recognize_text_entailment()
-    #  calc_entropy()
+    # identify_dialog_act_types()
+    # recognize_text_entailment()
+    calc_entropy()
 
 
 if __name__ == "__main__":
