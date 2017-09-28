@@ -22,16 +22,16 @@ def simple_regex_based_np_chunker():
   """
   cp = nltk.RegexpParser(grammar)
   result = cp.parse(sentence)
-  print result
+  print(result)
 #  result.draw()
   nouns = [("money", "NN"), ("market", "NN"), ("fund", "NN")]
-  print cp.parse(nouns)
+  print(cp.parse(nouns))
   sentence = [("Rapunzel", "NNP"), ("let", "VBD"), ("down", "RP"),
       ("her", "PP$"), ("long", "JJ"), ("golden", "JJ"), ("hair", "NN")]
-  print cp.parse(sentence)
+  print(cp.parse(sentence))
 
 def _find_chunks(pattern):
-  print "======", pattern, "======="
+  print("======", pattern, "=======")
   cp = nltk.RegexpParser(r"""
     CHUNK: {%s}
   """ % (pattern))
@@ -40,7 +40,7 @@ def _find_chunks(pattern):
     tree = cp.parse(sent)
     for subtree in tree.subtrees():
       if subtree.node == "CHUNK":
-        print subtree
+        print(subtree)
 
 def extract_pos_pattern_with_chunk_parser():
   _find_chunks("<V.*> <TO> <V.*>")
@@ -66,21 +66,21 @@ concern NN I-NP
 . . O
   """
   tree = nltk.chunk.conllstr2tree(text, chunk_types=["NP"])
-  print tree
+  print(tree)
 
 def read_chunked_corpus():
   from nltk.corpus import conll2000
-  print conll2000.chunked_sents("train.txt")[99]
-  print conll2000.chunked_sents("train.txt", chunk_types = ["NP"])[99]
+  print(conll2000.chunked_sents("train.txt")[99])
+  print(conll2000.chunked_sents("train.txt", chunk_types = ["NP"])[99])
 
 def evaluate_chunker():
   from nltk.corpus import conll2000
   cp = nltk.RegexpParser("") # baseline
   test_sents = conll2000.chunked_sents("test.txt", chunk_types=["NP"])
-  print cp.evaluate(test_sents)
+  print(cp.evaluate(test_sents))
   grammar = r"NP: {<[CDJNP].*>+}"
   cp1 = nltk.RegexpParser(grammar) # naive tagger, look for all tags in NP chunk
-  print cp1.evaluate(test_sents)
+  print(cp1.evaluate(test_sents))
 
 class UnigramChunker(nltk.ChunkParserI):
   def __init__(self, train_sents):
@@ -103,10 +103,10 @@ def chunk_with_unigram_tagger():
   test_sents = conll2000.chunked_sents("test.txt", chunk_types=["NP"])
   train_sents = conll2000.chunked_sents("train.txt", chunk_types=["NP"])
   unigram_chunker = UnigramChunker(train_sents)
-  print unigram_chunker.evaluate(test_sents)
+  print(unigram_chunker.evaluate(test_sents))
   postags = sorted(set(pos for sent in train_sents
                            for (word, pos) in sent.leaves()))
-  print unigram_chunker.tagger.tag(postags)
+  print(unigram_chunker.tagger.tag(postags))
 
 def _npchunk_features(sentence, i, history):
   features = {}
@@ -169,7 +169,7 @@ def train_classifier_based_chunker():
   test_sents = conll2000.chunked_sents("test.txt", chunk_types=["NP"])
   train_sents = conll2000.chunked_sents("train.txt", chunk_types=["NP"])
   chunker = ConsecutiveNPChunker(train_sents)
-  print chunker.evaluate(test_sents)
+  print(chunker.evaluate(test_sents))
 
 def recursive_chunk_parser():
   grammar = r"""
@@ -181,51 +181,51 @@ def recursive_chunk_parser():
   cp = nltk.RegexpParser(grammar, loop=2) # parses sentence multiple times
   sentence = [("Mary", "NN"), ("saw", "VBD"), ("the", "DT"), ("cat", "NN"),
     ("sit", "VB"), ("on", "IN"), ("the", "DT"), ("mat", "NN")]
-  print cp.parse(sentence)
+  print(cp.parse(sentence))
   sentence2 = [("John", "NNP"), ("thinks", "VBZ"), ("Mary", "NNP"),
     ("saw", "VBD"), ("the", "DT"), ("cat", "NN"), ("sit", "VB"),
     ("on", "IN"), ("the", "DT"), ("mat", "NN")]
-  print cp.parse(sentence2)
+  print(cp.parse(sentence2))
 
 def _traverse(t):
   try:
     t.node
   except AttributeError:
-    print t,
+    print(t,)
   else:
-    print "(", t.node,
+    print("(", t.node,)
     for child in t:
       _traverse(child)
-    print ")",
+    print(")",)
     
 def nltk_tree_handling():
   # construction
   tree1 = nltk.Tree("NP", ["Alice"])
-  print "tree1=", tree1
+  print("tree1=", tree1)
   tree2 = nltk.Tree("NP", ["the", "rabbit"])
-  print "tree2=", tree2
+  print("tree2=", tree2)
   tree3 = nltk.Tree("VP", ["chased", tree2])
-  print "tree3=", tree3
+  print("tree3=", tree3)
   tree4 = nltk.Tree("S", [tree1, tree3])
-  print "tree4=", tree4
+  print("tree4=", tree4)
   # deconstruction
-  print "tree4[1]=", tree4[1]
-  print "tree4[1].node=", tree4[1].node, \
-    "tree4[1].leaves()=", tree4[1].leaves()
-  print "tree4[1][1][1]=", tree4[1][1][1]
+  print("tree4[1]=", tree4[1])
+  print("tree4[1].node=", tree4[1].node,
+    "tree4[1].leaves()=", tree4[1].leaves())
+  print("tree4[1][1][1]=", tree4[1][1][1])
   _traverse(tree4)
 
 def named_entity_recognition():
   # Gazetteers: Alexandria or Getty
   sent = nltk.corpus.treebank.tagged_sents()[22]
-  print "NE (binary=True)", nltk.ne_chunk(sent, binary=True)
-  print "indiv NE types (binary=False)", nltk.ne_chunk(sent)
+  print("NE (binary=True)", nltk.ne_chunk(sent, binary=True))
+  print("indiv NE types (binary=False)", nltk.ne_chunk(sent))
 
 def relation_extraction():
   IN = re.compile(r".*\bin\b(?!\b.+ing)")
   for doc in nltk.corpus.ieer.parsed_docs("NYT_19980315"):
     for rel in nltk.sem.extract_rels("ORG", "LOC", doc, corpus="ieer", pattern=IN):
-      print nltk.sem.show_raw_rtuple(rel)
+      print(nltk.sem.show_raw_rtuple(rel))
 
 def relation_extraction2():
   # needs POS as well as NE annotations (in Dutch)
@@ -243,8 +243,8 @@ van/Prep      # followed by van (of)
   for doc in conll2002.chunked_sents("ned.train"):
     for r in nltk.sem.extract_rels("PER", "ORG", doc,
         corpus="conll2002", pattern=VAN):
-#      print nltk.sem.show_clause(r, relsym="VAN")
-      print nltk.sem.show_raw_rtuple(r, lcon=True, rcon=True)
+#      print(nltk.sem.show_clause(r, relsym="VAN"))
+      print(nltk.sem.show_raw_rtuple(r, lcon=True, rcon=True))
 
 def main():
   simple_regex_based_np_chunker()
@@ -259,7 +259,7 @@ def main():
 #  named_entity_recognition()
 #  relation_extraction()
 #  relation_extraction2()
-  print "end"
+  print("end")
   
 if __name__ == "__main__":
   main()
