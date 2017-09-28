@@ -39,7 +39,7 @@ def _find_chunks(pattern):
   for sent in brown.tagged_sents():
     tree = cp.parse(sent)
     for subtree in tree.subtrees():
-      if subtree.node == "CHUNK":
+      if subtree.label() == "CHUNK":
         print(subtree)
 
 def extract_pos_pattern_with_chunk_parser():
@@ -247,8 +247,8 @@ van/Prep      # followed by van (of)
       print(nltk.sem.show_raw_rtuple(r, lcon=True, rcon=True))
 
 def main():
-  simple_regex_based_np_chunker()
-#  extract_pos_pattern_with_chunk_parser()
+  # simple_regex_based_np_chunker()
+  extract_pos_pattern_with_chunk_parser()
 #  iob_to_tree()
 #  read_chunked_corpus()
 #  evaluate_chunker()
@@ -259,7 +259,6 @@ def main():
 #  named_entity_recognition()
 #  relation_extraction()
 #  relation_extraction2()
-  print("end")
   
 if __name__ == "__main__":
   main()
