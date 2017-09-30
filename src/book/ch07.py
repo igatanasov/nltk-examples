@@ -309,8 +309,8 @@ def main():
     # read_chunked_corpus()
     # evaluate_chunker()
     # chunk_with_unigram_tagger()
-    chunk_with_bigram_tagger()
-#  train_classifier_based_chunker() # TODO: finish running
+    # chunk_with_bigram_tagger()
+    train_classifier_based_chunker() # TODO: finish running
 #  recursive_chunk_parser()
 #  nltk_tree_handling()
 #  named_entity_recognition()
