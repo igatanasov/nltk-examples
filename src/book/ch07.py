@@ -235,14 +235,14 @@ def recursive_chunk_parser():
 
 def _traverse(t):
     try:
-        t.node
+        t.label()
     except AttributeError:
         print(
             t, )
     else:
         print(
             "(",
-            t.node, )
+            t.label(), )
         for child in t:
             _traverse(child)
         print(
@@ -261,7 +261,7 @@ def nltk_tree_handling():
     print("tree4=", tree4)
     # deconstruction
     print("tree4[1]=", tree4[1])
-    print("tree4[1].node=", tree4[1].node, "tree4[1].leaves()=",
+    print("tree4[1].node=", tree4[1].label(), "tree4[1].leaves()=",
           tree4[1].leaves())
     print("tree4[1][1][1]=", tree4[1][1][1])
     _traverse(tree4)
@@ -310,9 +310,9 @@ def main():
     # evaluate_chunker()
     # chunk_with_unigram_tagger()
     # chunk_with_bigram_tagger()
-    train_classifier_based_chunker() # TODO: finish running
-#  recursive_chunk_parser()
-#  nltk_tree_handling()
+    # train_classifier_based_chunker() # TODO: finish running
+    # recursive_chunk_parser()
+    nltk_tree_handling()
 #  named_entity_recognition()
 #  relation_extraction()
 #  relation_extraction2()
