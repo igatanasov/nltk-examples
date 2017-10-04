@@ -20,7 +20,7 @@ def sentence_parse_example():
   parser = nltk.ChartParser(groucho_grammar)
   trees = parser.nbest_parse(sent)
   for tree in trees:
-    print tree
+    print(tree)
 
 def simple_cfg():
 #  grammar = nltk.parse_cfg("""
@@ -59,7 +59,7 @@ def simple_cfg():
   # NOTE: production rules need to be right-recursive, ie X -> Y X
   rd_parser = nltk.RecursiveDescentParser(grammar)
   for tree in rd_parser.nbest_parse(sent):
-    print tree
+    print(tree)
 
 # recursive descent parsing - top down
 #   nltk.app.rdparser() - recursive descent demo
@@ -89,13 +89,13 @@ def parsing_types():
   """)
   sent = "Mary saw a dog".split()
   rd_parser = nltk.RecursiveDescentParser(grammar)
-  print "==== recursive descent ===="
+  print("==== recursive descent ====")
   for t in rd_parser.nbest_parse(sent):
-    print t
+    print(t)
   sr_parser = nltk.ShiftReduceParser(grammar)
-  print "==== shift reduce ===="
+  print("==== shift reduce ====")
   for t in sr_parser.nbest_parse(sent):
-    print t
+    print(t)
 
 def _chart_init_wfst(tokens, grammar):
   numtokens = len(tokens)
@@ -116,16 +116,16 @@ def _chart_complete_wfst(wfst, tokens, grammar, trace=False):
         if nt1 and nt2 and (nt1,nt2) in index:
           wfst[start][end] = index[(nt1, nt2)]
           if trace:
-            print "[%s] %3s [%s] %3s [%s] ==> [%s] %3s [%s]" % \
-              (start, nt1, mid, nt2, end, start, index[(nt1,nt2)], end)
+            print("[%s] %3s [%s] %3s [%s] ==> [%s] %3s [%s]" % \
+              (start, nt1, mid, nt2, end, start, index[(nt1,nt2)], end))
   return wfst
 
 def _chart_display(wfst, tokens):
-  print "\nWFST " + " ".join([("%-4d" %i) for i in range(1, len(wfst))])
+  print("\nWFST " + " ".join([("%-4d" %i) for i in range(1, len(wfst))]))
   for i in range(len(wfst)-1):
-    print "%-4d" % i,
+    print("%-4d" % i,)
     for j in range(1, len(wfst)):
-      print "%-4s" % (wfst[i][j] or "."),
+      print("%-4s" % (wfst[i][j] or "."),)
     print
     
 def chart_parsing():
@@ -152,13 +152,13 @@ def dependency_grammar():
     'in' -> 'pajamas'
     'pajamas' -> 'my'
   """)
-  print groucho_dep_grammar
+  print(groucho_dep_grammar)
   pdp = nltk.ProjectiveDependencyParser(groucho_dep_grammar)
   sent = "I shot an elephant in my pajamas".split()
   trees = pdp.parse(sent)
   for tree in trees:
 #    tree.draw()
-    print tree
+    print(tree)
 
 def _grammar_filter(tree):
   child_nodes = [child.node for child in tree
@@ -168,21 +168,21 @@ def _grammar_filter(tree):
 def grammar_development_with_treebank():
   from nltk.corpus import treebank
   t = treebank.parsed_sents("wsj_0001.mrg")[0]
-  print t
-  print "identify verbs for SV in VP -> SV S", [subtree for tree
+  print(t)
+  print("identify verbs for SV in VP -> SV S", [subtree for tree
     in treebank.parsed_sents()
-    for subtree in tree.subtrees(_grammar_filter)]
+    for subtree in tree.subtrees(_grammar_filter)])
 
 def word_valency():
   table = nltk.defaultdict(lambda: nltk.defaultdict(set))
   entries = nltk.corpus.ppattach.attachments("training")
   for entry in entries:
-#    print entry
+#    print(entry)
     key = entry.noun1 + "-" + entry.prep + "-" + entry.noun2
     table[key][entry.attachment].add(entry.verb)
   for key in sorted(table):
     if len(table[key]) > 1:
-      print key, "N:", sorted(table[key]["N"]), "V:", sorted(table[key]["V"])
+      print(key, "N:", sorted(table[key]["N"]), "V:", sorted(table[key]["V"]))
 
 def _give_give(t):
   return t.node == "VP" and len(t) > 3 and t[1].node == "NP" and \
@@ -197,7 +197,7 @@ def _give_print_node(t, width):
     (_give_sent(t[0]), t[1].node, _give_sent(t[1]), t[2].node, _give_sent(t[2]))
   if len(output) > width:
     output = output[:width] + "..."
-  print output
+  print(output)
 
 def give_gave_usage():
   # Kim gave a bone to the dog VS Kim gave the dog a bone (equally likely)
@@ -229,9 +229,9 @@ def pcfg_parser():
     NP -> 'telescopes' [0.8]
     NP -> 'Jack'       [0.2]
   """)
-  print grammar
+  print(grammar)
   viterbi_parser = nltk.ViterbiParser(grammar)
-  print viterbi_parser.parse("Jack saw telescopes".split())
+  print(viterbi_parser.parse("Jack saw telescopes".split()))
   
 def main():
 #  sentence_parse_example()
@@ -243,7 +243,7 @@ def main():
 #  word_valency()
 #  give_gave_usage()
   pcfg_parser()
-  print "end"
+  print("end")
   
 if __name__ == "__main__":
   main()
