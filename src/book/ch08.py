@@ -82,11 +82,11 @@ def parsing_types():
     sent = "Mary saw a dog".split()
     rd_parser = nltk.RecursiveDescentParser(grammar)
     print("==== recursive descent ====")
-    for t in rd_parser.nbest_parse(sent):
+    for t in rd_parser.parse(sent):
         print(t)
     sr_parser = nltk.ShiftReduceParser(grammar)
     print("==== shift reduce ====")
-    for t in sr_parser.nbest_parse(sent):
+    for t in sr_parser.parse(sent):
         print(t)
 
 
@@ -247,8 +247,10 @@ def pcfg_parser():
 
 def main():
     # sentence_parse_example()
-    simple_cfg()
-#  parsing_types()
+    # simple_cfg()
+    parsing_types()
+
+
 #  chart_parsing()
 #  dependency_grammar()
 #  grammar_development_with_treebank()
