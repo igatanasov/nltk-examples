@@ -162,9 +162,9 @@ def dependency_grammar():
 
 def _grammar_filter(tree):
     child_nodes = [
-        child.node for child in tree if isinstance(child, nltk.Tree)
+        child.label() for child in tree if isinstance(child, nltk.Tree)
     ]
-    return (tree.node == "VP") and ("S" in child_nodes)
+    return (tree.label() == "VP") and ("S" in child_nodes)
 
 
 def grammar_development_with_treebank():
@@ -192,8 +192,8 @@ def word_valency():
 
 
 def _give_give(t):
-    return t.node == "VP" and len(t) > 3 and t[1].node == "NP" and \
-      (t[2].node == "PP-DIV" or t[2].node == "NP") and \
+    return t.label() == "VP" and len(t) > 3 and t[1].label() == "NP" and \
+      (t[2].label() == "PP-DIV" or t[2].label() == "NP") and \
       ("give" in t[0].leaves() or "gave" in t[0].leaves())
 
 
@@ -203,7 +203,7 @@ def _give_sent(t):
 
 def _give_print_node(t, width):
     output = "%s %s: %s / %s: %s" % \
-      (_give_sent(t[0]), t[1].node, _give_sent(t[1]), t[2].node, _give_sent(t[2]))
+      (_give_sent(t[0]), t[1].label(), _give_sent(t[1]), t[2].label(), _give_sent(t[2]))
     if len(output) > width:
         output = output[:width] + "..."
     print(output)
@@ -231,7 +231,7 @@ def pcfg_parser():
     #    NP -> 'Jack'       [0.2]
     #  """)
     # alternative repr, or clause probs must sum to 1
-    grammar = nltk.parse_pcfg("""
+    grammar = nltk.PCFG.fromstring("""
     S -> NP VP         [1.0]
     VP -> TV NP [0.4] | IV [0.3] | DatV NP NP [0.3]
     TV -> 'saw'        [1.0]
@@ -250,13 +250,12 @@ def main():
     # simple_cfg()
     # parsing_types()
     # chart_parsing()
-    dependency_grammar()
+    # dependency_grammar()
+    # grammar_development_with_treebank()
+    # word_valency()
+    # give_gave_usage()
+    pcfg_parser()
 
-
-#  grammar_development_with_treebank()
-#  word_valency()
-#  give_gave_usage()
-# pcfg_parser()
 
 if __name__ == "__main__":
     main()
