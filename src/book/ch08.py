@@ -145,7 +145,7 @@ def chart_parsing():
 
 
 def dependency_grammar():
-    groucho_dep_grammar = nltk.parse_dependency_grammar("""
+    groucho_dep_grammar = nltk.DependencyGrammar.fromstring("""
     'shot' -> 'I' | 'elephant' | 'in'
     'elephant' -> 'an' | 'in'
     'in' -> 'pajamas'
@@ -248,11 +248,11 @@ def pcfg_parser():
 def main():
     # sentence_parse_example()
     # simple_cfg()
-    parsing_types()
+    # parsing_types()
+    # chart_parsing()
+    dependency_grammar()
 
 
-#  chart_parsing()
-#  dependency_grammar()
 #  grammar_development_with_treebank()
 #  word_valency()
 #  give_gave_usage()
