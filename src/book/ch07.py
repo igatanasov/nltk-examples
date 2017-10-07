@@ -279,7 +279,7 @@ def relation_extraction():
     for doc in nltk.corpus.ieer.parsed_docs("NYT_19980315"):
         for rel in nltk.sem.extract_rels(
                 "ORG", "LOC", doc, corpus="ieer", pattern=IN):
-            print(nltk.sem.show_raw_rtuple(rel))
+            print(nltk.sem.relextract.rtuple(rel))
 
 
 def relation_extraction2():
@@ -298,8 +298,7 @@ van/Prep      # followed by van (of)
     for doc in conll2002.chunked_sents("ned.train"):
         for r in nltk.sem.extract_rels(
                 "PER", "ORG", doc, corpus="conll2002", pattern=VAN):
-            #      print(nltk.sem.show_clause(r, relsym="VAN"))
-            print(nltk.sem.show_raw_rtuple(r, lcon=True, rcon=True))
+            print(nltk.sem.relextract.clause(r, relsym="VAN"))
 
 
 def main():
@@ -312,10 +311,10 @@ def main():
     # chunk_with_bigram_tagger()
     # train_classifier_based_chunker() # TODO: finish running
     # recursive_chunk_parser()
-    nltk_tree_handling()
-#  named_entity_recognition()
-#  relation_extraction()
-#  relation_extraction2()
+    # nltk_tree_handling()
+    # named_entity_recognition()
+    # relation_extraction()
+    relation_extraction2()
 
 if __name__ == "__main__":
     main()
