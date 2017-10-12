@@ -68,7 +68,7 @@ def sample_grammar():
     tokens = "Kim likes children".split()
     from nltk import load_parser
     cp = load_parser("grammars/book_grammars/feat0.fcfg", trace=2)
-    trees = cp.nbest_parse(tokens)
+    trees = cp.parse(tokens)
 
 
 def feature_structures():
@@ -122,11 +122,9 @@ def sentence_parsing():
 
 
 def main():
-    grammatical_features()
-
-
-#  the_dog_runs()
-#  sample_grammar()
+    # grammatical_features()
+    # the_dog_runs()
+    sample_grammar()
 #  feature_structures()
 #  feature_structure_unification()
 # sentence_parsing()
