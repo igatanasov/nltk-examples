@@ -116,7 +116,7 @@ def sentence_parsing():
     tokens = "rarely do you sing".split()
     from nltk import load_parser
     cp = load_parser("grammars/book_grammars/feat1.fcfg")
-    for tree in cp.nbest_parse(tokens):
+    for tree in cp.parse(tokens):
         print(tree)
         tree.draw()
 
@@ -124,10 +124,10 @@ def sentence_parsing():
 def main():
     # grammatical_features()
     # the_dog_runs()
-    sample_grammar()
-#  feature_structures()
-#  feature_structure_unification()
-# sentence_parsing()
+    # sample_grammar()
+    # feature_structures()
+    # feature_structure_unification()
+    sentence_parsing()
 
 if __name__ == "__main__":
     main()
