@@ -28,7 +28,7 @@ def logic_parser():
     SnF = lp('SnF')
     NotFnS = lp('-FnS')
     R = lp('SnF -> -FnS')
-    
+
     val = nltk.Valuation([('P', True), ('Q', True), ('R', False)])
     dom = set([])
     g = nltk.Assignment(dom)
@@ -40,9 +40,9 @@ def logic_parser():
 
 
 def first_order_logic():
-    tlp = nltk.LogicParser(type_check=True)
+    tlp = nltk.sem.Expression.fromstring
     sig = {"walk": "<e,t>"}
-    parsed = tlp.parse("walk(angus)", sig)
+    parsed = tlp("walk(angus)", sig)
     print("parsed_arg(value,type)=", parsed.argument, parsed.argument.type)
     print("parsed_func(value,type)=", parsed.function, parsed.function.type)
 
@@ -59,7 +59,7 @@ def truth_model():
   walk => {o, c}
   see => {(b,o), (c,b), (o,c)}
   """
-    val = nltk.parse_valuation(v)
+    val = nltk.Valuation.fromstring(v)
     print(val)
     print(('o', 'c') in val["see"])
     print(('b', ) in val["boy"])
@@ -70,11 +70,10 @@ def truth_model():
 
 def main():
     # english_to_sql()
-    logic_parser()
+    # logic_parser()
+    # first_order_logic()
+    truth_model()
 
-
-#  first_order_logic()
-# truth_model()
 
 if __name__ == "__main__":
     main()
