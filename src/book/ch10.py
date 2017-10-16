@@ -24,12 +24,11 @@ def english_to_sql():
 
 
 def logic_parser():
-    lp = nltk.LogicParser()
-    SnF = lp.parse('SnF')
-    NotFnS = lp.parse('-FnS')
-    R = lp.parse('SnF -> -FnS')
-    #  prover = nltk.Prover9()
-    #  print(prover.prove(NotFnS, [SnF, R]))
+    lp = nltk.sem.Expression.fromstring
+    SnF = lp('SnF')
+    NotFnS = lp('-FnS')
+    R = lp('SnF -> -FnS')
+    
     val = nltk.Valuation([('P', True), ('Q', True), ('R', False)])
     dom = set([])
     g = nltk.Assignment(dom)
@@ -70,10 +69,10 @@ def truth_model():
 
 
 def main():
-    english_to_sql()
+    # english_to_sql()
+    logic_parser()
 
 
-#  logic_parser()
 #  first_order_logic()
 # truth_model()
 
